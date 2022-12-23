@@ -1,54 +1,54 @@
 import styled from 'styled-components'
 
-const Container = styled.div`
-  padding: 0 0.5rem;
+const MainST = styled.main`
+  padding: 0;
+  max-width: 1000px;
+  margin:auto;
+`
+
+const ContainerST = styled.div`
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+`
+
+const SideBarST = styled.div`
+  width: 30%;
+  min-width: 295px;
   height: 100vh;
-  min-height: 100vh;
-`
-const Main = styled.main`
-  padding: 5rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem;
+  background-color: ${({theme}) => theme.colors.gray3};
 `
 
-const Title = styled.h1`
+const ContentST = styled.div`
+  width: 70%;
+  padding: 1rem;
+`
+
+const TitleST = styled.h1`
   margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
-  text-decoration: none;
-
-  a {
-    color: ${({ theme }) => theme.colors.secondary};
-    text-decoration: none;
-    &:hover,
-    :focus,
-    :active {
-      text-decoration: underline;
-    }
-  }
+  line-height: 1.5;
+  font-size: 2rem;
 `
 
-const Description = styled.p`
-  text-align: center;
+const SubtitleST = styled.h2`
+  margin-bottom: 0.5rem;
+  line-height:1.5;
+  font-size: 1.8 rem;
+`
+
+const ParagrafST = styled.p`
   line-height: 1.5;
   font-size: 1.5rem;
 `
-const CodeTag = styled.code`
-  background: #fafafa;
-  border-radius: 5px;
-  margin: 0 0.75rem;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+
+const ButtonST = styled.button`
+  color:${({theme}) => theme.colors.white};
+  background-color:${({theme}) => theme.colors.primary};
+  border-radius: 0.5rem;
+  padding:0.5rem;
 `
 
-export { Container, Main, Title, Description, CodeTag }
+
+export { ContainerST, MainST, SideBarST, ContentST, TitleST, SubtitleST, ParagrafST, ButtonST }

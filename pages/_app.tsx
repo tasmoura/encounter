@@ -4,8 +4,12 @@ import GlobalStyle from '../components/globalstyles'
 
 const theme: DefaultTheme = {
   colors: {
-    primary: '#111',
-    secondary: '#0070f3',
+    primary: '#000',
+    secondary: '#eee',
+    white: '#fff',
+    gray1: '#999',
+    gray2: '#ccc',
+    gray3: '#eee',
   },
 }
 
