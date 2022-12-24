@@ -1,19 +1,13 @@
 import { useState } from "react";
 import styled from 'styled-components'
 
-const PlayerStats = ({ index }) => {
-
-  const [value, setValue] = useState(1);
-  
-  const changeValue = event => {
-    setValue(event.target.value);
-  }
+const PlayerStats = ({ playerStats, changeValue }) => {
 
   return(
       <PlayerBlocoST>
-        <PlayerNameST id={`name-player-${index}`} type="text" placeholder="Name"></PlayerNameST>
-        <PlayerLevelST id={`lvl-player-${index}`} type="number" placeholder='level' min="1" max="20" value={value} onChange={changeValue}></PlayerLevelST>
-        <PlayerLevelST id={`init-player-${index}`} type="number" placeholder='Init'></PlayerLevelST>
+        <PlayerNameST name='name' type="text" placeholder="Name" value={playerStats.name} onChange={changeValue}></PlayerNameST>
+        <PlayerLevelST name='lvl' type="number" placeholder='level' min="1" max="20" value={playerStats.lvl} onChange={changeValue}></PlayerLevelST>
+        <PlayerLevelST name='initiative' type="number" placeholder='Init' value={playerStats.initiative} onChange={changeValue}></PlayerLevelST>
       </PlayerBlocoST>
     )
   }

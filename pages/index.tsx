@@ -1,8 +1,10 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import MonstersBlock from '../components/MonstersBlock'
 import PlayersBlock from '../components/PlayersBlock'
+import XpBlock from '../components/XpBlock'
+import PlayerStats from '../components/PlayerStats'
 import {
   ContainerST,
   ContentST,
@@ -11,12 +13,29 @@ import {
   SubtitleST
 } from '../components/sharedstyles'
 
+const player = {
+  name:'',lvl:1, initiative:0,xp:25
+}
+
 export default function Home() {
 
   // players data
-  const [players, setPlayers] = useState([]);
+  const [party, setParty] = useState([{...player}]);
+  const [partySize, setPartySize] = useState(1);
+  const [playersLvl, setPlayersLvl] = useState([1]);
+  const [partyListLvl, setPartyListLvl] = useState([1]);
+  const [partyListXp, setPartyListXp] = useState([1]);
+  //const partyListLvl = [1];
+  //const partyListXp = [lvlToXP(1)];
+  const [partyXp, setPartyXp] = useState(sumElem(partyListXp));
+  const playersList = [];
+
   // monsters on the enconter data
   const [encounterMonsters, setEncounterMonsters] = useState([]);
+
+  useEffect( ()=>{
+    console.log(party);
+  }, [party] )
 
   // general functions
   function lvlToXP ( lvl ){
@@ -56,41 +75,26 @@ export default function Home() {
     return totalSum;
   }
 
-/*   function addNumberPlayers (){
-    
-
-  });
-
-    playerListLvl = [1];
-    for(let p=0; p<numberPlayers+1; p++){
-      playerListLvl[p] = 1;
-      playerListXP[p] = lvlToXP(playerListLvl[p]);
-    }
-
-    setPartyXP(sumElem(playerListXP));
-
-    console.log('addNumberPlayer:')
-    console.log(playerListLvl)
-    console.log(playerListXP)
+  //add and remove players functions
+  function addNumberPlayers (){
+    setParty([...party, {...player}]);
   }
 
   function removeNumberPlayers (){
-    if(numberPlayers>1){
-      setNumberPlayers( numberPlayers -1 )
+    if(party.length>1){
+      setParty( party.slice(0,-1) );
     }
+  }
 
-    playerListLvl = [1];
-    for(let p=0; p<numberPlayers-1; p++){
-      playerListLvl[p] = 1;
-      playerListXP[p] = lvlToXP(playerListLvl[p]);
-    }
+  function changeValue (index, event, party){
+    console.log('index: ' + index);
+    console.log('party: ' + party);
+    const newPlayer = {...party[index], [event.target.name]:event.target.value}; //define new party.player.lvl
+    const newParty = [...party];
+    newParty.splice(index,1,newPlayer); //change party element by the new one
 
-    setPartyXP(sumElem(playerListXP));
-
-    console.log('removeNumberPlayer:')
-    console.log(playerListLvl)
-    console.log(playerListXP)
-  } */
+    setParty(newParty);
+  }
 
   return (
     <div>
@@ -103,7 +107,12 @@ export default function Home() {
       <MainST>
         <ContainerST>
           <SideBarST>
-            <PlayersBlock />
+            <PlayersBlock actionAdd={addNumberPlayers} actionRemove={removeNumberPlayers}>
+              <XpBlock xpTotal={partyXp} />
+              {party.map((item, index)=>
+                <PlayerStats key={index} playerStats={item} changeValue={(event) => changeValue(index, event, party)} />
+              )}
+            </PlayersBlock>
             <MonstersBlock />
           </SideBarST>
           <ContentST>
