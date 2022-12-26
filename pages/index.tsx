@@ -12,6 +12,7 @@ import {
   SideBarST,
   SubtitleST
 } from '../components/sharedstyles'
+import { listenerCount } from 'process'
 
 const player = {
   name:'',lvl:1, initiative:0,xp:25
@@ -21,20 +22,15 @@ export default function Home() {
 
   // players data
   const [party, setParty] = useState([{...player}]);
-  const [partySize, setPartySize] = useState(1);
-  const [playersLvl, setPlayersLvl] = useState([1]);
-  const [partyListLvl, setPartyListLvl] = useState([1]);
-  const [partyListXp, setPartyListXp] = useState([1]);
-  //const partyListLvl = [1];
-  //const partyListXp = [lvlToXP(1)];
-  const [partyXp, setPartyXp] = useState(sumElem(partyListXp));
-  const playersList = [];
+  //const [partyListXp, setPartyListXp] = useState([25]);
+  const [partyXp, setPartyXp] = useState(25);
 
   // monsters on the enconter data
   const [encounterMonsters, setEncounterMonsters] = useState([]);
 
   useEffect( ()=>{
     console.log(party);
+    partyXpSum(party)
   }, [party] )
 
   // general functions
@@ -75,6 +71,16 @@ export default function Home() {
     return totalSum;
   }
 
+  function partyXpSum( playerList ){
+    let partyXp = [];
+    for (let p=0; p < playerList.length; p++){
+      partyXp[p] = lvlToXP(playerList[p].lvl);
+      console.log(partyXp);
+    }
+    
+    setPartyXp(sumElem(partyXp));
+  }
+
   //add and remove players functions
   function addNumberPlayers (){
     setParty([...party, {...player}]);
@@ -85,11 +91,11 @@ export default function Home() {
       setParty( party.slice(0,-1) );
     }
   }
-
+  // change input value on each player
   function changeValue (index, event, party){
-    console.log('index: ' + index);
-    console.log('party: ' + party);
-    const newPlayer = {...party[index], [event.target.name]:event.target.value}; //define new party.player.lvl
+    //console.log('changeValue:');
+    //console.log('party: ' + party);
+    let newPlayer = {...party[index], [event.target.name]:event.target.value, xp:lvlToXP(event.target.value)}; //define new party.player.lvl
     const newParty = [...party];
     newParty.splice(index,1,newPlayer); //change party element by the new one
 
