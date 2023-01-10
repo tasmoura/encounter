@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import {
-  ButtonST,
   SubtitleST,
 } from '../sharedstyles'
 

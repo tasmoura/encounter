@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import MonstersBlock from '../components/MonstersBlock'
+import CreaturesBlock from '../components/CreaturesBlock'
 import PlayersBlock from '../components/PlayersBlock'
 import XpBlock from '../components/XpBlock'
 import PlayerStats from '../components/PlayerStats'
@@ -10,9 +10,11 @@ import {
   ContentST,
   MainST,
   SideBarST,
-  SubtitleST
+  SubtitleST,
+  SearchInputST
 } from '../components/sharedstyles'
 import { listenerCount } from 'process'
+import CreaturesList from '../components/CreaturesList'
 
 const player = {
   name:'',lvl:1, initiative:0,xp:25
@@ -34,6 +36,7 @@ export default function Home() {
   }, [party] )
 
   // general functions
+  //convert character lvl on equivalent XP amount
   function lvlToXP ( lvl ){
     let xpNumber;
 
@@ -81,7 +84,7 @@ export default function Home() {
     setPartyXp(sumElem(partyXp));
   }
 
-  //add and remove players functions
+  //add and remove players from the party functions
   function addNumberPlayers (){
     setParty([...party, {...player}]);
   }
@@ -93,12 +96,11 @@ export default function Home() {
   }
   // change input value on each player
   function changeValue (index, event, party){
-    //console.log('changeValue:');
-    //console.log('party: ' + party);
     let newPlayer = {...party[index], [event.target.name]:event.target.value, xp:lvlToXP(event.target.value)}; //define new party.player.lvl
     const newParty = [...party];
     newParty.splice(index,1,newPlayer); //change party element by the new one
 
+    // set party hook to the party with the new changes
     setParty(newParty);
   }
 
@@ -119,11 +121,10 @@ export default function Home() {
                 <PlayerStats key={index} playerStats={item} changeValue={(event) => changeValue(index, event, party)} />
               )}
             </PlayersBlock>
-            <MonstersBlock />
+            <CreaturesBlock />
           </SideBarST>
           <ContentST>
-            <SubtitleST>Dungeon Beholder Encounter</SubtitleST>
-            <p>Lista de monstros</p>
+            <CreaturesList />
           </ContentST>
         </ContainerST>
       </MainST>

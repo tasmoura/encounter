@@ -16,14 +16,16 @@ const ContainerST = styled.div`
 const SideBarST = styled.div`
   width: 30%;
   min-width: 295px;
-  height: 100vh;
+  height: calc(100vh - 60px);
   padding: 1rem;
+  padding-bottom: 0;
   background-color: ${({theme}) => theme.colors.gray3};
 `
 
 const ContentST = styled.div`
   width: 70%;
   padding: 1rem;
+  padding-bottom: 0;
 `
 
 const TitleST = styled.h1`
@@ -50,5 +52,38 @@ const ButtonST = styled.button`
   padding:0.5rem;
 `
 
+const SearchInputST = styled.input`
+  background-color: ${({theme}) => theme.colors.white};
+  border-radius: 20px;
+  border: 1px solid ${({theme}) => theme.colors.gray1};
+  padding: 0.25rem;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+`
 
-export { ContainerST, MainST, SideBarST, ContentST, TitleST, SubtitleST, ParagrafST, ButtonST }
+const SearchWrapper = styled.div`
+  position: relative;
+  font-weight:bold;
+  :after{
+    content: "";
+    position: absolute;
+    top:0.25rem;
+    left:0.5rem;
+    height: 8px;
+    width: 8px;
+    border-radius:50%;
+    border:3px solid ${({theme}) => theme.colors.gray1};
+  }
+  :before{
+    content: "";
+    position: absolute;
+    top:1rem;
+    left:0.55rem;
+    height: 6px;
+    width: 3px;
+    background-color:${({theme}) => theme.colors.gray1};
+    transform: rotate(25deg);
+  }
+`
+
+export { ContainerST, MainST, SideBarST, ContentST, TitleST, SubtitleST, ParagrafST, ButtonST,SearchWrapper, SearchInputST }
