@@ -1,20 +1,20 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import CreaturesBlock from '../components/CreaturesBlock'
-import PlayersBlock from '../components/PlayersBlock'
-import XpBlock from '../components/XpBlock'
-import PlayerStats from '../components/PlayerStats'
+import CreaturesBlock from '../components/EncounterArea/CreaturesBlock'
+import PlayersBlock from '../components/PlayersArea/PlayersBlock'
+import XpBlock from '../components/PlayersArea/XpBlock'
+import PlayerStats from '../components/PlayersArea/PlayerStats'
 import {
   ContainerST,
   ContentST,
   MainST,
-  SideBarST,
-  SubtitleST,
-  SearchInputST
+  SideBarST
 } from '../components/sharedstyles'
 import { listenerCount } from 'process'
-import CreaturesList from '../components/CreaturesList'
+import CreaturesList from '../components/CreaturesListArea/CreaturesList'
+import { CreaturesData } from '../components/data'
+import CreatureItem from '../components/CreaturesListArea/CreatureItem'
 
 const player = {
   name:'',lvl:1, initiative:0,xp:25
@@ -24,14 +24,14 @@ export default function Home() {
 
   // players data
   const [party, setParty] = useState([{...player}]);
-  //const [partyListXp, setPartyListXp] = useState([25]);
   const [partyXp, setPartyXp] = useState(25);
 
   // monsters on the enconter data
-  const [encounterMonsters, setEncounterMonsters] = useState([]);
+  const [encounter, setEncounter] = useState([]);
+  const creatureData = CreaturesData;
 
   useEffect( ()=>{
-    console.log(party);
+    //console.log(party);
     partyXpSum(party)
   }, [party] )
 
@@ -78,7 +78,7 @@ export default function Home() {
     let partyXp = [];
     for (let p=0; p < playerList.length; p++){
       partyXp[p] = lvlToXP(playerList[p].lvl);
-      console.log(partyXp);
+      //console.log(partyXp);
     }
     
     setPartyXp(sumElem(partyXp));
@@ -104,6 +104,29 @@ export default function Home() {
     setParty(newParty);
   }
 
+  // add creature from the list to the encouter block
+  function addCreatureToEncounter(encounter, item){
+    // identify if there exist already the same creature in the encounter (by it's ID)
+    let indexOfCreature = encounter.findIndex( (element) => element.id == item.id );
+    if( indexOfCreature == -1 ){
+      //add new creature
+      let newEncounterCreature = item;
+      newEncounterCreature.amount = 1;
+      setEncounter([...encounter, newEncounterCreature]);
+    } else{
+      // increase amount of the creature
+      let updatedCreature = {...encounter[indexOfCreature]};
+      updatedCreature.amount ++;
+      let newEncounter = [...encounter];
+      newEncounter.splice(indexOfCreature,1,updatedCreature);
+
+      setEncounter(newEncounter);
+    }
+
+    
+
+  }
+
   return (
     <div>
       <Head>
@@ -122,9 +145,23 @@ export default function Home() {
               )}
             </PlayersBlock>
             <CreaturesBlock />
+            {
+              encounter.map((item, index) => 
+                <p key={index}>{item.name} <span>({item.amount})</span></p>
+              )
+            }
           </SideBarST>
           <ContentST>
-            <CreaturesList />
+            <CreaturesList>
+              { creatureData.map((item, index) =>
+                  <CreatureItem
+                      key={index}
+                      creatureAttributes={item}
+                      action={() => addCreatureToEncounter(encounter, item)}
+                  />
+                )
+              }
+            </CreaturesList>
           </ContentST>
         </ContainerST>
       </MainST>

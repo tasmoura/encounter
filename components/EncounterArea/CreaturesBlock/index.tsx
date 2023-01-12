@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import {
   SubtitleST,
-} from '../sharedstyles'
+} from '../../sharedstyles'
 
 const MonstersBlock = ({ numberPlayers = 4 }) => {
 

@@ -1,5 +1,5 @@
-const CreaturesData = [
-    {   id:0,
+const CreaturesList = [
+    {   id:1,
         name: "Aarakocra",
         cr:0.25,
         type: "humanoid",
@@ -388,7 +388,7 @@ const CreaturesData = [
                 coastal: false
             }
     },
-    {   id:14,
+    {   id:1,
             name: "Adult Silver Dragon",
             cr:16,
             type: "dragon",
@@ -418,7 +418,7 @@ const CreaturesData = [
                 coastal: true
             }
     },
-    {   id:15,
+    {   id:1,
             name: "Adult White Dragon",
             cr:13,
             type: "dragon",
@@ -448,7 +448,7 @@ const CreaturesData = [
                 coastal: false
             }
     },
-    {   id:16,
+    {   id:1,
         name: "Air Elemental",
         cr:5,
         type: "elemental",
@@ -478,38 +478,45 @@ const CreaturesData = [
             coastal: true
         }
     },
-    {   id:17,
-        name: "Air Elemental Large",
-        cr:5,
-        type: "elemental",
+    {   id:1,
+        name: "Allosaurus",
+        cr:2,
+        type: "beast",
         size: "large",
-        ac: 15,
-        hp: 90,
-        initiative: 5,
-        alignment: "neutral",
+        ac: 13,
+        hp: 51,
+        initiative: 1,
+        alignment: "unaligned",
         speed:{
-            fly: true,
+            fly: false,
             swim: false,
-            walk: false,
+            walk: true,
             climb: false,
         },
         legendary: false,
         environment: {
-            desert: true,
-            mountain: true,
-            grassland: false,
-            forest: false,
-            hill: false,
-            swamp: false,
+            desert: false,
+            mountain: false,
+            grassland: true,
+            forest: true,
+            hill: true,
+            swamp: true,
             urban: false,
-            artic: true,
+            artic: false,
             underdark: false,
             underwater: false,
-            coastal: true
+            coastal: false
         }
     },
 
    
 ]
+
+let CreaturesData = [];
+// define unique id to elements
+for(let e=0; e < CreaturesList.length; e++){
+    CreaturesData[e] = CreaturesList[e];
+    CreaturesData[e].id = e;
+}
 
 export { CreaturesData }

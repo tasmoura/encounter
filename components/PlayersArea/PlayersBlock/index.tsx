@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {
   ButtonST,
   SubtitleST,
-} from '../sharedstyles'
+} from '../../sharedstyles'
 
 const PlayersBlock = ({ children, actionAdd, actionRemove }) => {
   

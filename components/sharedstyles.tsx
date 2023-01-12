@@ -50,6 +50,7 @@ const ButtonST = styled.button`
   background-color:${({theme}) => theme.colors.primary};
   border-radius: 0.5rem;
   padding:0.5rem;
+  cursor:pointer;
 `
 
 const SearchInputST = styled.input`
